@@ -63,18 +63,17 @@ app.put('/user', async (req, res) => {
     }
 })
 
-app.delete('/user/delete', async (req, res) => {
-    const { id } = req.body
-    console.log(req.body)
-// console.log(emailComprobation[0].id)
+app.delete('/user/delete/:id', async (req, res) => {
+    const { id } = req.params
+
     if (id) {
         const [rows] = await pool.query(
-            'DELETE FROM users where id = ?',
+            'DELETE FROM users WHERE id = ?',
             [id]
         )
-        res.status(200).json({ rows })
+        return res.status(200).send('usuario eliminado')
     } else {
-        res.status(404).send('El usuario ya tiene una cuenta')
+        return res.status(404).send('No se encuentra usuario')
     }
 })
 
