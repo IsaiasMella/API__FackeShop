@@ -7,10 +7,11 @@ const app = express()
 
 //le digo que va a reibir datos en formato Json
 app.use(express.json())
-//que use cors para peritir la comunicación con cualquier aplicación
+
+//que use cors para permitir la comunicación con cualquier aplicación
 app.use(cors())
 
-//servicios
+//servicios que presta el servidor: registrar, modificar, eliminar, loguear
 app.post('/register', async (req, res) => {
     const { name, last_name, password, email } = req.body
     const [emailComprobation] = await pool.query(
@@ -44,7 +45,6 @@ app.post('/login', async (req, res) => {
 
 })
 
-
 app.put('/user', async (req, res) => {
     const { name, last_name, password, email } = req.body
     const [emailComprobation] = await pool.query(
@@ -77,6 +77,7 @@ app.delete('/user/delete/:id', async (req, res) => {
     }
 })
 
+//le digo al servidor en que puerto va a estar
 app.listen(3001, () => {
     console.log('servidor arriba en el puerto 3001')
 })
